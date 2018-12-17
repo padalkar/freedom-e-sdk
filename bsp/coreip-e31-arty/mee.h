@@ -1,6 +1,7 @@
 #ifndef ASSEMBLY
 #include <mee/drivers/sifive,gpio0.h>
 #include <mee/drivers/sifive,uart0.h>
+#include <mee/drivers/sifive,spi0.h>
 #include <mee/drivers/sifive,test0.h>
 /* From gpio@20002000 */
 asm (".weak __mee_dt_gpio_20002000");
@@ -9,6 +10,10 @@ struct __mee_driver_sifive_gpio0 __mee_dt_gpio_20002000;
 /* From serial@20000000 */
 asm (".weak __mee_dt_serial_20000000");
 struct __mee_driver_sifive_uart0 __mee_dt_serial_20000000;
+
+/* From spi@20004000 */
+asm (".weak __mee_dt_spi_20004000");
+struct __mee_driver_sifive_spi0 __mee_dt_spi_20004000;
 
 /* From teststatus@4000 */
 asm (".weak __mee_dt_teststatus_4000");
@@ -31,6 +36,16 @@ struct __mee_driver_sifive_uart0 __mee_dt_serial_20000000 = {
     .pinmux = NULL,
 };
 
+/* From spi@20004000 */
+struct __mee_driver_sifive_spi0 __mee_dt_spi_20004000 = {
+    .vtable = &__mee_driver_vtable_sifive_spi0,
+    .spi.vtable = &__mee_driver_vtable_sifive_spi0.spi,
+    .control_base = 536887296UL,
+    .control_size = 4096UL,
+    .clock = NULL,
+    .pinmux = NULL,
+};
+
 /* From teststatus@4000 */
 struct __mee_driver_sifive_test0 __mee_dt_teststatus_4000 = {
     .vtable = &__mee_driver_vtable_sifive_test0,
@@ -41,6 +56,8 @@ struct __mee_driver_sifive_test0 __mee_dt_teststatus_4000 = {
 
 /* From teststatus@4000 */
 #define __MEE_DT_SHUTDOWN_HANDLE (&__mee_dt_teststatus_4000.shutdown)
+/* From spi@20004000 */
+#define __MEE_DT_SPI_0_HANDLE (&__mee_dt_spi_20004000.spi)
 /* From serial@20000000 */
 #define __MEE_DT_STDOUT_UART_HANDLE (&__mee_dt_serial_20000000.uart)
 #define __MEE_DT_STDOUT_UART_BAUD 115200
